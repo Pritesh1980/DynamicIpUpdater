@@ -1,0 +1,5 @@
+{
+    # Complete and rename to creds.json
+    "url" : "https://[INSERT URL OF API END-POINT]",
+    "api-key" : "[INSERT API-KEY FOR END-POINT]"
+}
