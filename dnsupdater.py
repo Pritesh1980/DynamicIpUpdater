@@ -7,7 +7,7 @@ import requests
 
 # logging.basicConfig(filename='/root/dns-updates.log',level=logging.INFO)
 logging.basicConfig(
-    filename='dns-updater.log',
+    filename='/root/dns-updates.log',
     format='%(asctime)s %(levelname)-8s %(message)s',
     level=logging.INFO,
     datefmt='%Y-%m-%d %H:%M:%S')
