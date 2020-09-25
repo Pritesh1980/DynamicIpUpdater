@@ -2,9 +2,15 @@ import logging
 import urllib.request
 import os.path
 from os import path
+import json
+import requests
 
-
-logging.basicConfig(filename='dns-updater.log',level=logging.INFO)
+# logging.basicConfig(filename='/root/dns-updates.log',level=logging.INFO)
+logging.basicConfig(
+    filename='dns-updater.log',
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
 
 currentIp = None
 storedIpFile = '/root/stored-ip'
@@ -40,13 +46,27 @@ def external_ip_changed():
 
 def updateDns():
     print("DNS Update requested for: " + currentIp) 
+    with open('creds.json') as creds_file:
+        data = json.load(creds_file)
+        # print(data)
+        url = data['url']
+        apikey = data['api-key']
 
+        print("URL: " + url)
+        print("Api-Key: " + apikey)
+
+        # Issue GET request
+        r = requests.get(url, headers={"x-api-key":apikey})
+        logging.debug(r)
+
+        logging.info("DNS updated to " + currentIp)
 
 
 def main():
-    if( external_ip_changed() ):
+    if( external_ip_changed() ): 
         updateDns()
-
+    else:
+        logging.debug("IP unchanged")
 
 
 
